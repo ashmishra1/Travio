@@ -19,9 +19,6 @@ class CityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: 20.0,
-      ),
       height: 50.0,
       child: ListView.builder(
         shrinkWrap: true,
@@ -44,11 +41,10 @@ class CityTab extends StatelessWidget {
                                   places[index])
                               ? null
                               : color1.withOpacity(0.1),
-                          gradient:
-                              (homeController.selectedTag.value ==
-                                      places[index])
-                                  ? grad1
-                                  : null,
+                          gradient: (homeController.selectedTag.value ==
+                                  places[index])
+                              ? grad1
+                              : null,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
@@ -56,8 +52,7 @@ class CityTab extends StatelessWidget {
                           child: Text(
                             places[index],
                             style: TextStyle(
-                                color: (homeController
-                                            .selectedTag.value ==
+                                color: (homeController.selectedTag.value ==
                                         places[index])
                                     ? Colors.white
                                     : color1,

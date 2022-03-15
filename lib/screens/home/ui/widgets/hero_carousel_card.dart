@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:travio/models/category.dart';
+import 'package:travio/screens/categories/ui/categories.dart';
 
 class HeroCarouselCard extends StatelessWidget {
   final Category? category;
@@ -10,9 +12,10 @@ class HeroCarouselCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // if (this.product == null) {
-        //   Navigator.pushNamed(context, '/catalog', arguments: category);
-        // }
+        
+        Get.to(CategoriesScreen(
+          type: category!.name,
+        ));
       },
       child: Container(
         margin: const EdgeInsets.all(5.0),
@@ -41,12 +44,14 @@ class HeroCarouselCard extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 20.0),
-                    child: Text(
-                      category!.name,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    child: Center(
+                      child: Text(
+                        category!.name,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "598319259939",
+    "project_id": "travio-25540",
+    "storage_bucket": "travio-25540.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598319259939:android:a0471fb5e5a43a9e786c96",
+        "android_client_info": {
+          "package_name": "com.example.travio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598319259939-5foebe15mgfhe5lv6hnvo5786vjgmi1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travio",
+            "certificate_hash": "3f2d53b17546549edb350409b3e65a68c4ca9b35"
+          }
+        },
+        {
+          "client_id": "598319259939-0varaqf0l0i6dgeltt4qvgne7bijmslp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIxlQRFxkMcPdGStppOpvGw994dHYxdB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598319259939-0varaqf0l0i6dgeltt4qvgne7bijmslp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

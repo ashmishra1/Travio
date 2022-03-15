@@ -44,7 +44,7 @@ class Places {
     ),
     const Places(
       name: "Nico Park",
-      category: "Parks",
+      category: "Park",
       imageUrl:
           "https://bhubaneswartourism.in/images//tourist-places/ocean-world-water-park-bhubaneswar/ocean-world-water-park-bhubaneswar-tourism-entry-ticket-price.jpg",
       isRecommended: true,
@@ -54,8 +54,9 @@ class Places {
     ),
     const Places(
       name: "Nandankanan",
-      category: "Parks",
-      imageUrl: "https://i.ytimg.com/vi/QDjNR00WUbA/maxresdefault.jpg",
+      category: "Park",
+      imageUrl:
+          "https://i.ytimg.com/vi/QDjNR00WUbA/maxresdefault.jpg",
       isRecommended: true,
       isPopular: true,
       crowd: 25.80,
@@ -63,7 +64,7 @@ class Places {
     ),
     const Places(
       name: "Nico Park",
-      category: "Parks",
+      category: "Park",
       imageUrl:
           "https://bhubaneswartourism.in/images//tourist-places/ocean-world-water-park-bhubaneswar/ocean-world-water-park-bhubaneswar-tourism-entry-ticket-price.jpg",
       isRecommended: true,

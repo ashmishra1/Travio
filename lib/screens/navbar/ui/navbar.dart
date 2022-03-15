@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:travio/screens/account/ui/account.dart';
 import 'package:travio/screens/booking/ui/booking.dart';
 import 'package:travio/screens/home/ui/home.dart';
+import 'package:travio/screens/mytrip/ui/mytrip.dart';
 import 'package:travio/screens/navbar/controller/navbar.dart';
 import 'package:travio/utils/shared/app_colors.dart';
 
@@ -40,9 +41,16 @@ class Navbar extends StatelessWidget {
                   : Colors.black,
             ),
             Icon(
-              Icons.account_circle_outlined,
+              Icons.time_to_leave_outlined,
               size: 30,
               color: navbarContoller.tabIndex.value == 2
+                  ? Colors.white
+                  : Colors.black,
+            ),
+            Icon(
+              Icons.account_circle_outlined,
+              size: 30,
+              color: navbarContoller.tabIndex.value == 3
                   ? Colors.white
                   : Colors.black,
             ),
@@ -64,6 +72,7 @@ class Navbar extends StatelessWidget {
               children: const [
                 HomeScreen(),
                 BookingScreen(),
+                MyTripScreen(),
                 AccountScreen(),
               ],
             ),

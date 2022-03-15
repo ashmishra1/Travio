@@ -33,31 +33,31 @@ class PlacesSearch extends StatelessWidget {
               color: Colors.grey,
               fontSize: 16.0,
             ),
-            contentPadding: const EdgeInsets.symmetric(
-                vertical: 20, horizontal: 20),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             filled: true,
             fillColor: Colors.white,
             prefixIcon: Icon(
               Icons.search,
               color: color1,
-              size: 25.0,
+              size: 20.0,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ).copyWith(
               borderSide: const BorderSide(
                 color: Colors.transparent,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ).copyWith(
               borderSide: const BorderSide(
                 color: Colors.transparent,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ).copyWith(
               borderSide: const BorderSide(
                 color: Colors.transparent,

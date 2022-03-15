@@ -62,7 +62,9 @@ class PlacesCard extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Image.network(places.imageUrl,
-                  fit: BoxFit.cover, height: 350.0, width: 300.0),
+                  fit: BoxFit.cover,
+                  height: 300.0,
+                  width: screenWidthPercentage(context) - 40.0),
               Positioned(
                 bottom: 0.0,
                 left: 0.0,

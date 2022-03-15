@@ -46,54 +46,46 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Explore',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        verticalSpaceSmall,
-                        InkWell(
-                          onTap: () {
-                            Get.to(LocationScreen());
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.location,
-                                color: color1,
-                                size: 16,
-                              ),
-                              Text(
-                                'Odisha',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                    color: color1),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    const Text(
+                      'travio',
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                      ),
                     ),
-                    IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.map))
-                    // Container(
-                    //   width: 60.0,
-                    //   height: 60.0,
-                    //   decoration: const BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     image: DecorationImage(
-                    //       fit: BoxFit.cover,
-                    //       image: NetworkImage(
-                    //           'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80'),
-                    //     ),
-                    //   ),
-                    // ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(LocationScreen());
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.location,
+                            color: color1,
+                            size: 16,
+                          ),
+                          Text(
+                            'Odisha',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w300,
+                                color: color1),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
+              verticalSpaceMedium,
+              // Container(
+              //   height: 140.0,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     color: Colors.cyanAccent,
+              //   ),
+              // ),
               verticalSpaceMedium,
               PlacesSearch(searchController: searchController),
               verticalSpaceMedium,
@@ -102,32 +94,34 @@ class HomeScreen extends StatelessWidget {
                 places: places,
                 homeController: homeController,
               ),
-              verticalSpaceRegular,
+              verticalSpaceMedium,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Popular places',
+                      'Categories',
                       style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Poppins'),
                     ),
                     verticalSpaceMedium,
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        aspectRatio: 3.0,
-                        viewportFraction: 0.5,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: true,
-                        autoPlay: true,
+                    Container(
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          aspectRatio: 4.0,
+                          viewportFraction: 0.4,
+                          enlargeCenterPage: false,
+                          enableInfiniteScroll: true,
+                          autoPlay: true,
+                        ),
+                        items: Category.categories
+                            .map((category) =>
+                                HeroCarouselCard(category: category))
+                            .toList(),
                       ),
-                      items: Category.categories
-                          .map((category) =>
-                              HeroCarouselCard(category: category))
-                          .toList(),
                     ),
                     verticalSpaceMedium,
                   ],
@@ -139,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Reccomended for you',
+                      'Recommended for you',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
