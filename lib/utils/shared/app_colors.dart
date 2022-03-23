@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Color color1 = Colors.indigoAccent.shade200;
-Color color2 = Colors.orange.withOpacity(0.02);
+Color color2 = Colors.orange.shade50;
 const Color kcMediumGreyColor = Color(0xff868686);
 const Color kcLightGreyColor = Color(0xffe5e5e5);
 const Color kcVeryLightGreyColor = Color(0xFFFFFFFF);

@@ -10,7 +10,6 @@ import 'package:travio/screens/home/ui/widgets/places_carousel.dart';
 import 'package:travio/screens/location/ui/location.dart';
 import 'package:travio/utils/shared/app_colors.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
-import 'package:travio/utils/widgets/box_input_field.dart';
 
 import 'widgets/city_tab.dart';
 import 'widgets/places_search.dart';
@@ -56,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(LocationScreen());
+                        Get.to(const LocationScreen());
                       },
                       child: Row(
                         children: [
@@ -79,13 +78,13 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               verticalSpaceMedium,
-              // Container(
-              //   height: 140.0,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     color: Colors.cyanAccent,
-              //   ),
-              // ),
+              Container(
+                height: 140.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.cyan.shade100,
+                ),
+              ),
               verticalSpaceMedium,
               PlacesSearch(searchController: searchController),
               verticalSpaceMedium,

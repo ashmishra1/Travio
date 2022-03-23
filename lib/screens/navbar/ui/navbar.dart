@@ -69,7 +69,7 @@ class Navbar extends StatelessWidget {
           child: Obx(
             () => IndexedStack(
               index: navbarContoller.tabIndex.value,
-              children: const [
+              children: [
                 HomeScreen(),
                 BookingScreen(),
                 MyTripScreen(),
