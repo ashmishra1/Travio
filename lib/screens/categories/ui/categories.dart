@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:travio/models/places.dart';
+import 'package:travio/screens/home/controller/home.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
 
 import 'widgets/categories_card.dart';
@@ -10,6 +12,7 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController homeController = Get.find();
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Colors.orange.withOpacity(0.05)),
@@ -32,9 +35,7 @@ class CategoriesScreen extends StatelessWidget {
             ),
             verticalSpaceMedium,
             CategoriesCarousel(
-                places: Places.products
-                    .where((product) => product.category == type)
-                    .toList()),
+                ),
           ],
         ),
       ),

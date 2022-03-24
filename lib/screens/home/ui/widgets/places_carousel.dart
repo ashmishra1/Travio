@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travio/models/places.dart';
+import 'package:travio/models/places_model.dart';
 import 'package:travio/screens/description/ui/description.dart';
+import 'package:travio/screens/home/controller/home.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
 
 class PlacesCarousel extends StatelessWidget {
-  final List<Places> places;
+  final List<PlacesModel> places;
   const PlacesCarousel({
     Key? key,
     required this.places,
@@ -15,29 +17,32 @@ class PlacesCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-    return Container(
-      alignment: Alignment.topLeft,
-      height: 200,
-      child: ListView.builder(
-          controller: scrollController,
-          shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(
-            vertical: 10.0,
-          ),
-          scrollDirection: Axis.horizontal,
-          itemCount: places.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 5.0),
-              child: PlacesCard(places: places[index]),
-            );
-          }),
-    );
+    HomeController homeController = Get.find();
+    return Obx(() => Container(
+        alignment: Alignment.topLeft,
+        height: 200,
+        child: Container(
+            child: (places.isEmpty)
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: places.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: PlacesCard(places: places[index]),
+                      );
+                    }))));
   }
 }
 
 class PlacesCard extends StatelessWidget {
-  final Places places;
+  final PlacesModel places;
   final double widthFactor;
   final bool isWishList;
   const PlacesCard({
@@ -63,7 +68,7 @@ class PlacesCard extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           child: Stack(
             children: <Widget>[
-              Image.network(places.imageUrl,
+              Image.network(places.images[0].img,
                   fit: BoxFit.cover,
                   height: 300.0,
                   width: screenWidthPercentage(context) - 40.0),
@@ -110,7 +115,7 @@ class PlacesCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  places.crowd.toString() + '%',
+                                  '68 %',
                                   style: const TextStyle(
                                     fontSize: 12.0,
                                     color: Colors.white,
@@ -121,11 +126,11 @@ class PlacesCard extends StatelessWidget {
                             ),
                             horizontalSpaceTiny,
                             Icon(
-                              (places.prediction == 'Rise')
-                                  ? CupertinoIcons.up_arrow
-                                  : (places.prediction == 'Fall')
-                                      ? CupertinoIcons.down_arrow
-                                      : CupertinoIcons.arrow_up_arrow_down,
+                              // (places.prediction == 'Rise')
+                              //     ? CupertinoIcons.up_arrow
+                              //     : (places.prediction == 'Fall')
+                              //         ? CupertinoIcons.down_arrow
+                              CupertinoIcons.arrow_up_arrow_down,
                               color: Colors.white,
                               size: 16.0,
                             ),

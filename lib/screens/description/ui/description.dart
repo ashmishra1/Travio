@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:travio/models/places.dart';
+import 'package:travio/models/places_model.dart';
+import 'package:travio/screens/description/controller/description.dart';
+import 'package:travio/screens/home/controller/home.dart';
+import 'package:travio/screens/mytrip/ui/widget/trip_card.dart';
 import 'package:travio/utils/shared/app_colors.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
-import 'package:travio/utils/widgets/box_button.dart';
 
 class CardDescription extends StatefulWidget {
-  final Places places;
+  final PlacesModel places;
   const CardDescription({Key? key, required this.places}) : super(key: key);
 
   @override
@@ -16,6 +18,11 @@ class CardDescription extends StatefulWidget {
 
 class _CardDescriptionState extends State<CardDescription> {
   bool value = false;
+  var readMore = false;
+  DescriptionController descriptionController =
+      Get.put(DescriptionController());
+  ScrollController scrollController = ScrollController();
+  HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +36,12 @@ class _CardDescriptionState extends State<CardDescription> {
               child: ClipRRect(
                 child: Stack(
                   children: <Widget>[
-                    Image.network(widget.places.imageUrl,
+                    Image.network(widget.places.images[0].img,
                         fit: BoxFit.cover,
                         height: 200.0,
                         width: screenWidthPercentage(context)),
                     Positioned(
-                      top: 50.0,
+                      top: 20.0,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Container(
@@ -110,7 +117,7 @@ class _CardDescriptionState extends State<CardDescription> {
                                         ),
                                       ),
                                       Text(
-                                        widget.places.crowd.toString() + '%',
+                                        '78 %',
                                         style: const TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.white,
@@ -121,12 +128,11 @@ class _CardDescriptionState extends State<CardDescription> {
                                   ),
                                   horizontalSpaceTiny,
                                   Icon(
-                                    (widget.places.prediction == 'Rise')
-                                        ? CupertinoIcons.up_arrow
-                                        : (widget.places.prediction == 'Fall')
-                                            ? CupertinoIcons.down_arrow
-                                            : CupertinoIcons
-                                                .arrow_up_arrow_down,
+                                    // (widget.places.prediction == 'Rise')
+                                    //     ? CupertinoIcons.up_arrow
+                                    //     : (widget.places.prediction == 'Fall')
+                                    //         ? CupertinoIcons.down_arrow
+                                    CupertinoIcons.arrow_up_arrow_down,
                                     color: Colors.white,
                                     size: 16.0,
                                   ),
@@ -158,7 +164,7 @@ class _CardDescriptionState extends State<CardDescription> {
                               color: Colors.grey.shade700,
                             ),
                           ),
-                          const Text('5:30 AM'),
+                          Text(widget.places.openingTime),
                         ],
                       ),
                       Column(
@@ -170,7 +176,7 @@ class _CardDescriptionState extends State<CardDescription> {
                               color: Colors.grey.shade700,
                             ),
                           ),
-                          const Text('6:30 PM'),
+                          Text(widget.places.closingTime),
                         ],
                       ),
                     ],
@@ -197,14 +203,37 @@ class _CardDescriptionState extends State<CardDescription> {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
                   verticalSpaceRegular,
-                  Text(
-                    'This is the largest temple of Bhubaneswar. The architecture flaunts the medieval stages of tradition in Bhubaneswar of Kalinga Architecture. The temple is also one of the oldest temples to be built and believed to be built by the kings from the Somavamsi dynasty, with later additions from the Ganga rulers.',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w100,
-                      color: Colors.grey.shade600,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
+                  ((widget.places.about.length <= 250 || readMore != false)
+                      ? InkWell(
+                          onTap: () {
+                            setState(() {
+                              readMore = !readMore;
+                            });
+                          },
+                          child: Text(
+                            widget.places.about,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w100,
+                              color: Colors.grey.shade600,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        )
+                      : InkWell(
+                          onTap: () {
+                            setState(() {
+                              readMore = !readMore;
+                            });
+                          },
+                          child: Text(
+                            widget.places.about.substring(0, 250) + '. . . ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w100,
+                              color: Colors.grey.shade600,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ))
                 ],
               ),
             ),
@@ -226,78 +255,64 @@ class _CardDescriptionState extends State<CardDescription> {
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
-                  verticalSpaceRegular,
-                  Column(
-                    children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: value,
-                                    onChanged: (value) =>
-                                        setState(() => this.value = value!),
-                                  ),
-                                  Text(
-                                    'Temple Visit',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w100,
-                                      color: Colors.grey.shade600,
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      child: (places.isEmpty)
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              controller: scrollController,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: widget.places.packages.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Checkbox(
+                                                value: value,
+                                                onChanged: (value) => setState(
+                                                    () => this.value = value!),
+                                              ),
+                                              Text(
+                                                widget.places.packages[index]
+                                                    .pkName,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  color: Colors.grey.shade600,
+                                                ),
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          'Rs. 40',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: value
+                                                ? color1
+                                                : Colors.grey.shade600,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
                                     ),
-                                    textAlign: TextAlign.justify,
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
-                            Text(
-                              'Rs. 40',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: value ? color1 : Colors.grey.shade600,
-                              ),
-                              textAlign: TextAlign.justify,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: value,
-                                    onChanged: (value) =>
-                                        setState(() => this.value = value!),
-                                  ),
-                                  Text(
-                                    'Mahaprasad Booking',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w100,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'Rs. 500',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: value ? color1 : Colors.grey.shade600,
-                              ),
-                              textAlign: TextAlign.justify,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),

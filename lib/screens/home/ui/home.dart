@@ -21,16 +21,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
     List<String> places = [
-      'Bhubaneswar',
-      'Puri',
-      'Koraput',
-      'Cuttack',
-      'Dhenkanal',
-      'Nayagarh'
+      'All',
+      'New Delhi',
+      'Jaipur',
+      'Agra',
     ];
 
     ScrollController scrollController = ScrollController();
     HomeController homeController = Get.put(HomeController());
+    homeController.getPlacesByCity('All');
     return Scaffold(
       backgroundColor: Colors.orange.withOpacity(0.02),
       body: SafeArea(
@@ -139,9 +138,17 @@ class HomeScreen extends StatelessWidget {
                     ),
                     verticalSpaceMedium,
                     PlacesCarousel(
-                        places: Places.products
-                            .where((product) => product.isRecommended)
-                            .toList()),
+                        places: homeController.streamReccomendedPlaces),
+                    verticalSpaceMedium,
+                    const Text(
+                      'Places',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    verticalSpaceMedium,
+                    PlacesCarousel(places: homeController.streamPlaces),
                     verticalSpaceMedium,
                   ],
                 ),

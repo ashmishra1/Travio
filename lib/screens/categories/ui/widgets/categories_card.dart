@@ -1,26 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:travio/models/places.dart';
+import 'package:travio/models/places_model.dart';
+import 'package:travio/screens/description/ui/description.dart';
+import 'package:travio/screens/home/controller/home.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
 
 class CategoriesCarousel extends StatelessWidget {
-  final List<Places> places;
   const CategoriesCarousel({
     Key? key,
-    required this.places,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    HomeController homeController = Get.find();
     ScrollController scrollController = ScrollController();
-    return places.isEmpty
+    return Obx(() => homeController.streamCategoriesPlaces.isEmpty
         ? SizedBox(
             height: screenHeightPercentage(context, percentage: 0.6),
-            child: const Center(
-              child: Text(
-                'Oops! There is Nothing to show',
-              ),
-            ),
+            child: const Center(child: CircularProgressIndicator()),
           )
         : Container(
             margin: const EdgeInsets.symmetric(
@@ -33,19 +32,20 @@ class CategoriesCarousel extends StatelessWidget {
                   vertical: 10.0,
                 ),
                 scrollDirection: Axis.vertical,
-                itemCount: places.length,
+                itemCount: homeController.streamCategoriesPlaces.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 5.0),
-                    child: CategoriesCard(places: places[index]),
+                    child: CategoriesCard(
+                        places: homeController.streamCategoriesPlaces[index]),
                   );
                 }),
-          );
+          ));
   }
 }
 
 class CategoriesCard extends StatelessWidget {
-  final Places places;
+  final PlacesModel places;
   final double widthFactor;
   final bool isWishList;
   const CategoriesCard({
@@ -57,13 +57,12 @@ class CategoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController homeController = Get.find();
     return Column(
       children: [
         InkWell(
           onTap: () {
-            // if (this.product == null) {
-            //   Navigator.pushNamed(context, '/catalog', arguments: category);
-            // }
+            Get.to(() => CardDescription(places: places));
           },
           child: Container(
             margin: const EdgeInsets.only(
@@ -73,7 +72,7 @@ class CategoriesCard extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               child: Stack(
                 children: <Widget>[
-                  Image.network(places.imageUrl,
+                  Image.network(places.images[0].img,
                       fit: BoxFit.cover,
                       height: 180.0,
                       width: screenWidthPercentage(context) - 40.0),
@@ -120,7 +119,7 @@ class CategoriesCard extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      places.crowd.toString() + '%',
+                                      '47%',
                                       style: const TextStyle(
                                         fontSize: 12.0,
                                         color: Colors.white,
@@ -131,11 +130,11 @@ class CategoriesCard extends StatelessWidget {
                                 ),
                                 horizontalSpaceTiny,
                                 Icon(
-                                  (places.prediction == 'Rise')
-                                      ? CupertinoIcons.up_arrow
-                                      : (places.prediction == 'Fall')
-                                          ? CupertinoIcons.down_arrow
-                                          : CupertinoIcons.arrow_up_arrow_down,
+                                  // (places.prediction == 'Rise')
+                                  //     ? CupertinoIcons.up_arrow
+                                  //     : (places.prediction == 'Fall')
+                                  //         ? CupertinoIcons.down_arrow
+                                  CupertinoIcons.arrow_up_arrow_down,
                                   color: Colors.white,
                                   size: 16.0,
                                 ),

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travio/models/category.dart';
 import 'package:travio/screens/categories/ui/categories.dart';
+import 'package:travio/screens/home/controller/home.dart';
 
 class HeroCarouselCard extends StatelessWidget {
   final Category? category;
-  // final Product? product;
   const HeroCarouselCard({Key? key, this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    HomeController homeController = Get.put(HomeController());
     return InkWell(
       onTap: () {
-        
+        homeController.streamCategoriesPlaces.value = [];
+        homeController.getPlacesByCategories(
+            homeController.selectedTag.value, category!.name);
         Get.to(CategoriesScreen(
           type: category!.name,
         ));

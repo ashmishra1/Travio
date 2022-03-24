@@ -30,6 +30,8 @@ class CityTab extends StatelessWidget {
             InkWell(
                 onTap: () {
                   homeController.selectedTag.value = places[index];
+                  homeController
+                      .getPlacesByCity(homeController.selectedTag.value);
                 },
                 child: Obx(
                   () => Row(
