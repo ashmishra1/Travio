@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:travio/models/places.dart';
+import 'package:travio/screens/description/ui/description.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
 
 class PlacesCarousel extends StatelessWidget {
@@ -49,9 +51,9 @@ class PlacesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // if (this.product == null) {
-        //   Navigator.pushNamed(context, '/catalog', arguments: category);
-        // }
+        Get.to(() => CardDescription(
+              places: places,
+            ));
       },
       child: Container(
         margin: const EdgeInsets.only(

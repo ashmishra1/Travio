@@ -87,9 +87,8 @@ class _MyTripScreenState extends State<MyTripScreen> {
                     Text(
                       'my trip',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
                       ),
                     ),
                     InkWell(
@@ -124,59 +123,69 @@ class _MyTripScreenState extends State<MyTripScreen> {
                 ),
               ),
               verticalSpaceRegular,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 50.0,
-                      width: screenWidthPercentage(context, percentage: 0.38),
-                      child: Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total',
-                              style: TextStyle(
-                                  color: color1, fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              'Rs. 540',
-                              style: TextStyle(
-                                  color: color1,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => SortTrip());
-                      },
-                      child: Container(
-                        height: 50.0,
-                        width: screenWidthPercentage(context, percentage: 0.38),
-                        decoration: BoxDecoration(
-                            color: color1,
-                            borderRadius: BorderRadius.circular(10.0)),
-                        child: Center(
-                          child: Text(
-                            'PROCEED',
-                            style: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              ShowTotal()
             ],
           )),
+    );
+  }
+}
+
+class ShowTotal extends StatelessWidget {
+  const ShowTotal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 50.0,
+            width: screenWidthPercentage(context, percentage: 0.38),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Total',
+                    style:
+                        TextStyle(color: color1, fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'Rs. 540',
+                    style: TextStyle(
+                        color: color1,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Get.to(() => SortTrip());
+            },
+            child: Container(
+              height: 50.0,
+              width: screenWidthPercentage(context, percentage: 0.38),
+              decoration: BoxDecoration(
+                  color: color1, borderRadius: BorderRadius.circular(10.0)),
+              child: Center(
+                child: Text(
+                  'PROCEED',
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

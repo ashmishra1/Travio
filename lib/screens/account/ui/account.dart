@@ -47,27 +47,46 @@ class AccountScreen extends GetView<AccountController> {
                   children: [
                     ListCard(
                       onTap: () {
-                        // Get.to(() => const ProfileScreen());
+                        Get.rawSnackbar(
+                          message: 'Coming soon!',
+                          forwardAnimationCurve: Curves.easeIn,
+                          dismissDirection: DismissDirection.horizontal,
+                          backgroundColor: kcLightBackgroundColor,
+                          isDismissible: true,
+                          snackStyle: SnackStyle.FLOATING,
+                        );
                       },
                       icon: Icons.person_outline,
                       title: 'Manage Profile',
                     ),
                     ListCard(
                       onTap: () {
-                        // Get.to(() => const EarningsDetailsScreen());
+                        Get.rawSnackbar(
+                          message: 'Coming soon!',
+                          forwardAnimationCurve: Curves.easeIn,
+                          dismissDirection: DismissDirection.horizontal,
+                          backgroundColor: kcLightBackgroundColor,
+                          isDismissible: true,
+                          snackStyle: SnackStyle.FLOATING,
+                        );
                       },
                       icon: Icons.monetization_on_outlined,
                       title: 'Wallet',
                     ),
                     ListCard(
                       onTap: () {
-                        // Get.to(() => const BuyersRequestsScreen());
+                        Get.rawSnackbar(
+                          message: 'Coming soon!',
+                          forwardAnimationCurve: Curves.easeIn,
+                          dismissDirection: DismissDirection.horizontal,
+                          backgroundColor: kcLightBackgroundColor,
+                          isDismissible: true,
+                          snackStyle: SnackStyle.FLOATING,
+                        );
                       },
                       icon: Icons.fact_check_outlined,
                       title: 'Tickets',
                     ),
-
-                    
                     ListCard(
                       onTap: () {},
                       icon: Icons.credit_card,

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:travio/screens/mytrip/controller/mytrip.dart';
 import 'package:travio/utils/shared/app_colors.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
+import 'package:travio/utils/widgets/box_button.dart';
 
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({Key? key}) : super(key: key);
@@ -45,9 +46,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     const Text(
                       'confirm',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
                       ),
                     ),
                   ],
@@ -55,7 +55,39 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
               verticalSpaceLarge,
               const ConfirmCard(),
-              verticalSpaceLarge,
+              verticalSpaceMedium,
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40.0),
+                height: 60.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          child: Row(
+                        children: const [
+                          Icon(CupertinoIcons.tag),
+                          horizontalSpaceSmall,
+                          Text('Apply Coupon'),
+                        ],
+                      )),
+                      Text(
+                        'remove',
+                        style: TextStyle(
+                          color: color1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              verticalSpaceMedium,
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Text(
@@ -70,10 +102,62 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
-                          Text('Your Total'),
+                          Text('Trip Cost'),
+                          Text(
+                            'Rs. 570',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ],
-                      )
+                      ),
+                      verticalSpaceSmall,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('tax'),
+                          Text(
+                            'Rs. 10',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpaceSmall,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('Discount'),
+                          Text(
+                            '- Rs. 40',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpaceRegular,
+                      Divider(
+                        thickness: 0.9,
+                      ),
+                      verticalSpaceRegular,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('total'),
+                          Text(
+                            'Rs. 540',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpaceMedium,
+                      BoxButton(title: 'BOOK TICKET')
                     ],
                   ),
                 ),

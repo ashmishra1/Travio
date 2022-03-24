@@ -48,9 +48,8 @@ class HomeScreen extends StatelessWidget {
                     const Text(
                       'travio',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
                       ),
                     ),
                     InkWell(
@@ -102,9 +101,9 @@ class HomeScreen extends StatelessWidget {
                     const Text(
                       'Categories',
                       style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins'),
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     verticalSpaceMedium,
                     Container(

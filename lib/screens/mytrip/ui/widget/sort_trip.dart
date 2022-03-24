@@ -45,9 +45,8 @@ class _SortTripState extends State<SortTrip> {
                     const Text(
                       're order',
                       style: const TextStyle(
-                        fontSize: 35,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
                       ),
                     ),
                   ],

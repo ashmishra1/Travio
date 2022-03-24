@@ -57,7 +57,7 @@ class Navbar extends StatelessWidget {
           ],
           color: Colors.white,
           buttonBackgroundColor: Colors.indigoAccent.shade200,
-          backgroundColor: color2,
+          backgroundColor: Colors.orange.withOpacity(0.05),
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 600),
           onTap: (index) {
