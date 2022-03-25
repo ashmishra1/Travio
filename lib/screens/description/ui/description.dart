@@ -17,14 +17,19 @@ class CardDescription extends StatefulWidget {
 }
 
 class _CardDescriptionState extends State<CardDescription> {
-  bool value = false;
+  bool value1 = false;
+  bool value2 = false;
+  bool value3 = false;
+  bool value4 = false;
+  bool val = false;
   var readMore = false;
-  DescriptionController descriptionController =
-      Get.put(DescriptionController());
+
   ScrollController scrollController = ScrollController();
   HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
+    DescriptionController descriptionController =
+        Get.put(DescriptionController());
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -92,7 +97,10 @@ class _CardDescriptionState extends State<CardDescription> {
                                   ),
                                   horizontalSpaceSmall,
                                   Text(
-                                    widget.places.name,
+                                    (widget.places.name.length > 18)
+                                        ? widget.places.name.substring(0, 18) +
+                                            '. . .'
+                                        : widget.places.name,
                                     style: const TextStyle(
                                       fontSize: 24.0,
                                       color: Colors.white,
@@ -116,9 +124,9 @@ class _CardDescriptionState extends State<CardDescription> {
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      Text(
+                                      const Text(
                                         '78 %',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
@@ -127,7 +135,7 @@ class _CardDescriptionState extends State<CardDescription> {
                                     ],
                                   ),
                                   horizontalSpaceTiny,
-                                  Icon(
+                                  const Icon(
                                     // (widget.places.prediction == 'Rise')
                                     //     ? CupertinoIcons.up_arrow
                                     //     : (widget.places.prediction == 'Fall')
@@ -197,7 +205,7 @@ class _CardDescriptionState extends State<CardDescription> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Description',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -237,41 +245,90 @@ class _CardDescriptionState extends State<CardDescription> {
                 ],
               ),
             ),
-            verticalSpaceRegular,
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Divider(
-                thickness: 1.4,
-              ),
+            Column(
+              children: [
+                verticalSpaceRegular,
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Divider(
+                    thickness: 1.4,
+                  ),
+                ),
+                verticalSpaceRegular,
+              ],
             ),
-            verticalSpaceRegular,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Menu',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  const Text(
+                    'Entry Fee',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      child: (places.isEmpty)
-                          ? Center(child: CircularProgressIndicator())
-                          : ListView.builder(
-                              controller: scrollController,
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 10.0,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: widget.places.packages.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Container(
+                  (widget.places.entryFee.isNotEmpty)
+                      ? Column(
+                          children: [
+                            (widget.places.entryFee[0].indianEntryFee != 0)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: value1,
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                if (value == true) {
+                                                  descriptionController
+                                                          .totalPrice.value +=
+                                                      widget.places.entryFee[0]
+                                                          .indianEntryFee;
+                                                } else {
+                                                  descriptionController
+                                                          .totalPrice.value -=
+                                                      widget.places.entryFee[0]
+                                                          .indianEntryFee;
+                                                }
+                                                this.value1 = value!;
+                                              }),
+                                            ),
+                                            Text(
+                                              'Indian Entry Fee',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                color: Colors.grey.shade600,
+                                              ),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Rs. ' +
+                                              widget.places.entryFee[0]
+                                                  .indianEntryFee
+                                                  .toString(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: value1
+                                                ? color1
+                                                : Colors.grey.shade600,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            (widget.places.entryFee[0].foreignEntryFee != 0)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -280,13 +337,29 @@ class _CardDescriptionState extends State<CardDescription> {
                                           child: Row(
                                             children: [
                                               Checkbox(
-                                                value: value,
-                                                onChanged: (value) => setState(
-                                                    () => this.value = value!),
+                                                value: value2,
+                                                onChanged: (value) =>
+                                                    setState(() {
+                                                  if (value == true) {
+                                                    descriptionController
+                                                            .totalPrice.value +=
+                                                        widget
+                                                            .places
+                                                            .entryFee[0]
+                                                            .foreignEntryFee;
+                                                  } else {
+                                                    descriptionController
+                                                            .totalPrice.value -=
+                                                        widget
+                                                            .places
+                                                            .entryFee[0]
+                                                            .foreignEntryFee;
+                                                  }
+                                                  this.value2 = value!;
+                                                }),
                                               ),
                                               Text(
-                                                widget.places.packages[index]
-                                                    .pkName,
+                                                'Foreign Entry Fee',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w100,
                                                   color: Colors.grey.shade600,
@@ -297,10 +370,13 @@ class _CardDescriptionState extends State<CardDescription> {
                                           ),
                                         ),
                                         Text(
-                                          'Rs. 40',
+                                          'Rs. ' +
+                                              widget.places.entryFee[0]
+                                                  .foreignEntryFee
+                                                  .toString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: value
+                                            color: value2
                                                 ? color1
                                                 : Colors.grey.shade600,
                                           ),
@@ -308,17 +384,243 @@ class _CardDescriptionState extends State<CardDescription> {
                                         ),
                                       ],
                                     ),
+                                  )
+                                : const SizedBox(),
+                            (widget.places.entryFee[0].photography != 0)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Checkbox(
+                                                value: value3,
+                                                onChanged: (value) =>
+                                                    setState(() {
+                                                  if (value == true) {
+                                                    descriptionController
+                                                            .totalPrice.value +=
+                                                        widget
+                                                            .places
+                                                            .entryFee[0]
+                                                            .photography;
+                                                  } else {
+                                                    descriptionController
+                                                            .totalPrice.value -=
+                                                        widget
+                                                            .places
+                                                            .entryFee[0]
+                                                            .photography;
+                                                  }
+                                                  this.value3 = value!;
+                                                }),
+                                              ),
+                                              Text(
+                                                'Photography Fee',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  color: Colors.grey.shade600,
+                                                ),
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          'Rs. ' +
+                                              widget.places.entryFee[0]
+                                                  .photography
+                                                  .toString(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: value3
+                                                ? color1
+                                                : Colors.grey.shade600,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            (widget.places.entryFee[0].videography != 0)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: value4,
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                if (value == true) {
+                                                  descriptionController
+                                                          .totalPrice.value +=
+                                                      widget.places.entryFee[0]
+                                                          .videography;
+                                                } else {
+                                                  descriptionController
+                                                          .totalPrice.value -=
+                                                      widget.places.entryFee[0]
+                                                          .videography;
+                                                }
+                                                this.value4 = value!;
+                                              }),
+                                            ),
+                                            Text(
+                                              'Videography Fee',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                color: Colors.grey.shade600,
+                                              ),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Rs. ' +
+                                              widget.places.entryFee[0]
+                                                  .videography
+                                                  .toString(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: value4
+                                                ? color1
+                                                : Colors.grey.shade600,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                verticalSpaceRegular,
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Divider(
+                    thickness: 1.4,
+                  ),
+                ),
+                verticalSpaceRegular,
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Packages',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      child: (places.isEmpty)
+                          ? const Center(
+                              child: const CircularProgressIndicator())
+                          : (widget.places.packages.isNotEmpty)
+                              ? ListView.builder(
+                                  controller: scrollController,
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0,
                                   ),
-                                );
-                              },
-                            ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: widget.places.packages.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 5.0),
+                                      child: (widget.places.packages[index]
+                                                  .pkName ==
+                                              '')
+                                          ? const SizedBox()
+                                          : Container(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Checkbox(
+                                                          value: val,
+                                                          onChanged: (value) =>
+                                                              setState(() =>
+                                                                  this.val =
+                                                                      value!),
+                                                        ),
+                                                        Text(
+                                                          widget
+                                                              .places
+                                                              .packages[index]
+                                                              .pkName,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w100,
+                                                            color: Colors
+                                                                .grey.shade600,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.justify,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Rs. ' +
+                                                        widget
+                                                            .places
+                                                            .packages[index]
+                                                            .pkPrice
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: val
+                                                          ? color1
+                                                          : Colors
+                                                              .grey.shade600,
+                                                    ),
+                                                    textAlign:
+                                                        TextAlign.justify,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: Text('No Packages available'),
+                                ),
                     ),
                   ),
                 ],
               ),
             ),
             verticalSpaceLarge,
-            ShowTotal(),
+            ShowTotal(
+              places: widget.places,
+            ),
+            verticalSpaceLarge,
           ],
         ),
       )),
@@ -327,12 +629,16 @@ class _CardDescriptionState extends State<CardDescription> {
 }
 
 class ShowTotal extends StatelessWidget {
+  final PlacesModel places;
   const ShowTotal({
     Key? key,
+    required this.places,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DescriptionController descriptionController =
+        Get.put(DescriptionController());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Row(
@@ -347,18 +653,26 @@ class ShowTotal extends StatelessWidget {
                   'Total',
                   style: TextStyle(color: color1, fontWeight: FontWeight.w400),
                 ),
-                Text(
-                  'Rs. 540',
-                  style: TextStyle(
-                      color: color1,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0),
-                ),
+                Obx(
+                  () => Text(
+                    'Rs. ' + descriptionController.totalPrice.value.toString(),
+                    style: TextStyle(
+                        color: color1,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0),
+                  ),
+                )
               ],
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              descriptionController.addWishlist(
+                places.id,
+                descriptionController.totalPrice.value.toString(),
+              );
+              Get.back();
+            },
             child: Container(
               height: 50.0,
               width: screenWidthPercentage(context, percentage: 0.38),
