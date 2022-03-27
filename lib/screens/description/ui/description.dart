@@ -531,86 +531,75 @@ class _CardDescriptionState extends State<CardDescription> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      child: (places.isEmpty)
-                          ? const Center(
-                              child: const CircularProgressIndicator())
-                          : (widget.places.packages.isNotEmpty)
-                              ? ListView.builder(
-                                  controller: scrollController,
-                                  shrinkWrap: true,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 10.0,
-                                  ),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: widget.places.packages.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 5.0),
-                                      child: (widget.places.packages[index]
-                                                  .pkName ==
-                                              '')
-                                          ? const SizedBox()
-                                          : Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    child: Row(
-                                                      children: [
-                                                        Checkbox(
-                                                          value: val,
-                                                          onChanged: (value) =>
-                                                              setState(() =>
-                                                                  this.val =
-                                                                      value!),
-                                                        ),
-                                                        Text(
-                                                          widget
-                                                              .places
-                                                              .packages[index]
-                                                              .pkName,
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w100,
-                                                            color: Colors
-                                                                .grey.shade600,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.justify,
-                                                        ),
-                                                      ],
+                      child: (widget.places.packages.isNotEmpty)
+                          ? ListView.builder(
+                              controller: scrollController,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: widget.places.packages.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: (widget
+                                              .places.packages[index].pkName ==
+                                          '')
+                                      ? const SizedBox()
+                                      : Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Row(
+                                                  children: [
+                                                    Checkbox(
+                                                      value: val,
+                                                      onChanged: (value) =>
+                                                          setState(() => this
+                                                              .val = value!),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    'Rs. ' +
-                                                        widget
-                                                            .places
-                                                            .packages[index]
-                                                            .pkPrice
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: val
-                                                          ? color1
-                                                          : Colors
-                                                              .grey.shade600,
+                                                    Text(
+                                                      widget
+                                                          .places
+                                                          .packages[index]
+                                                          .pkName,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w100,
+                                                        color: Colors
+                                                            .grey.shade600,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.justify,
                                                     ),
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                    );
-                                  },
-                                )
-                              : Center(
-                                  child: Text('No Packages available'),
-                                ),
+                                              Text(
+                                                'Rs. ' +
+                                                    widget.places
+                                                        .packages[index].pkPrice
+                                                        .toString(),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: val
+                                                      ? color1
+                                                      : Colors.grey.shade600,
+                                                ),
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                );
+                              },
+                            )
+                          : Center(
+                              child: Text('No Packages available'),
+                            ),
                     ),
                   ),
                 ],

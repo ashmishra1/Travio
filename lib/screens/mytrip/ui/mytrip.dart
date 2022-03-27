@@ -1,63 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travio/models/places.dart';
+import 'package:travio/screens/mytrip/controller/mytrip.dart';
 import 'package:travio/screens/mytrip/ui/widget/sort_trip.dart';
 import 'package:travio/screens/mytrip/ui/widget/trip_card.dart';
 import 'package:travio/utils/shared/app_colors.dart';
 import 'package:travio/utils/shared/ui_helpers.dart';
 import 'package:travio/utils/widgets/box_button.dart';
-
-List<Places> places = [
-  const Places(
-    name: "Lingaraj temple",
-    category: "Temples",
-    imageUrl:
-        "https://www.holidify.com/images/cmsuploads/compressed/shutterstock_611296796_20200218173507_20200218173559.jpg",
-    isRecommended: true,
-    isPopular: true,
-    crowd: 25.80,
-    prediction: 'Rise',
-  ),
-  const Places(
-    name: "Rajarani temple",
-    category: "Temples",
-    imageUrl:
-        "https://res.cloudinary.com/thrillophilia/image/upload/c_fill,f_auto,fl_progressive.strip_profile,g_auto,h_600,q_auto,w_auto/v1/filestore/yiv7jim2ocipr092gkkmazqlznwo_1587447431_Rajarani_Temple.jpg",
-    isRecommended: true,
-    isPopular: true,
-    crowd: 35.30,
-    prediction: 'Fall',
-  ),
-  const Places(
-    name: "Nico Park",
-    category: "Parks",
-    imageUrl:
-        "https://bhubaneswartourism.in/images//tourist-places/ocean-world-water-park-bhubaneswar/ocean-world-water-park-bhubaneswar-tourism-entry-ticket-price.jpg",
-    isRecommended: true,
-    isPopular: true,
-    crowd: 25.80,
-    prediction: 'Rise',
-  ),
-  const Places(
-    name: "Nandankanan",
-    category: "Parks",
-    imageUrl: "https://i.ytimg.com/vi/QDjNR00WUbA/maxresdefault.jpg",
-    isRecommended: true,
-    isPopular: true,
-    crowd: 25.80,
-    prediction: 'Same',
-  ),
-  const Places(
-    name: "Nico Park",
-    category: "Parks",
-    imageUrl:
-        "https://bhubaneswartourism.in/images//tourist-places/ocean-world-water-park-bhubaneswar/ocean-world-water-park-bhubaneswar-tourism-entry-ticket-price.jpg",
-    isRecommended: true,
-    isPopular: true,
-    crowd: 25.80,
-    prediction: 'Fall',
-  ),
-];
 
 class MyTripScreen extends StatefulWidget {
   MyTripScreen({Key? key}) : super(key: key);
@@ -70,6 +19,9 @@ class _MyTripScreenState extends State<MyTripScreen> {
   ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    MyTripController myTripController = Get.put(MyTripController());
+    myTripController.getWishlistAll();
+    myTripController.getPrice();
     return Scaffold(
       body: Container(
           decoration: BoxDecoration(color: Colors.orange.withOpacity(0.05)),
@@ -84,14 +36,18 @@ class _MyTripScreenState extends State<MyTripScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'my trip',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     InkWell(
+                      onTap: () {
+                        myTripController.clearWishlist();
+                        myTripController.wishList.value = [];
+                      },
                       child: Text(
                         'Clear All',
                         style: TextStyle(color: color1, fontSize: 14.0),
@@ -101,29 +57,42 @@ class _MyTripScreenState extends State<MyTripScreen> {
                 ),
               ),
               verticalSpaceLarge,
-              Container(
-                height: screenWidthPercentage(context, percentage: 1.18),
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemBuilder: (context, index) {
-                    final place = places[index];
-                    return TripCard(
-                      index: index,
-                      key: ValueKey(place),
-                    );
-                  },
-                  itemCount: places.length,
+              Obx(
+                () => Container(
+                  height: screenWidthPercentage(context, percentage: 1.18),
+                  child: (myTripController.wishList.isNotEmpty)
+                      ? ListView.builder(
+                          controller: scrollController,
+                          itemBuilder: (context, index) {
+                            final place = myTripController.wishList[index];
+                            return TripCard(
+                              index: index,
+                              key: ValueKey(place),
+                              wishlist: myTripController.wishList[index],
+                            );
+                          },
+                          itemCount: myTripController.wishList.length,
+                        )
+                      : Center(
+                          child: Text(
+                            "Oops! you have no destinations",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w100,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ),
                 ),
               ),
               verticalSpaceMedium,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Divider(
                   thickness: 1.0,
                 ),
               ),
               verticalSpaceRegular,
-              ShowTotal()
+              const ShowTotal()
             ],
           )),
     );
@@ -137,12 +106,13 @@ class ShowTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyTripController myTripController = Get.put(MyTripController());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
+          SizedBox(
             height: 50.0,
             width: screenWidthPercentage(context, percentage: 0.38),
             child: Center(
@@ -154,20 +124,23 @@ class ShowTotal extends StatelessWidget {
                     style:
                         TextStyle(color: color1, fontWeight: FontWeight.w400),
                   ),
-                  Text(
-                    'Rs. 540',
-                    style: TextStyle(
-                        color: color1,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0),
-                  ),
+                  Obx(
+                    () => Text(
+                      'Rs. ' + myTripController.totalPrice.value.toString(),
+                      style: TextStyle(
+                          color: color1,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
+                    ),
+                  )
                 ],
               ),
             ),
           ),
           InkWell(
             onTap: () {
-              Get.to(() => SortTrip());
+              // myTripController.getWishlistAll();
+              Get.to(() => const SortTrip());
             },
             child: Container(
               height: 50.0,

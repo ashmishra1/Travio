@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:travio/screens/mytrip/controller/mytrip.dart';
 import 'package:travio/screens/mytrip/ui/widget/confirmation.dart';
 import 'package:travio/screens/mytrip/ui/widget/trip_card.dart';
 import 'package:travio/utils/shared/app_colors.dart';
@@ -18,6 +19,7 @@ class _SortTripState extends State<SortTrip> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
+    MyTripController myTripController = Get.put(MyTripController());
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -53,11 +55,14 @@ class _SortTripState extends State<SortTrip> {
                 ),
               ),
               verticalSpaceLarge,
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Text(
                   'You can drag and drop the cards to reorder your trip',
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15.0),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ),
               verticalSpaceMedium,
@@ -70,18 +75,20 @@ class _SortTripState extends State<SortTrip> {
                 child: ReorderableListView.builder(
                     scrollController: scrollController,
                     itemBuilder: (context, index) {
-                      final place = places[index];
+                      final place = myTripController.wishList[index];
                       return TripCard(
                         index: index,
                         key: ValueKey(place),
+                        wishlist: place,
                       );
                     },
-                    itemCount: places.length,
+                    itemCount: myTripController.wishList.length,
                     onReorder: (oldIndex, newIndex) => setState(() {
                           final index =
                               newIndex > oldIndex ? newIndex - 1 : newIndex;
-                          final place = places.removeAt(oldIndex);
-                          places.insert(index, place);
+                          final place =
+                              myTripController.wishList.removeAt(oldIndex);
+                          myTripController.wishList.insert(index, place);
                         })),
               ),
               verticalSpaceMedium,
@@ -90,6 +97,7 @@ class _SortTripState extends State<SortTrip> {
                 child: BoxButton(
                   title: 'NEXT',
                   onTap: () {
+                    print(myTripController.wishList[0].name);
                     Get.to(
                       () => const ConfirmationPage(),
                     );

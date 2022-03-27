@@ -157,7 +157,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         ],
                       ),
                       verticalSpaceMedium,
-                      BoxButton(title: 'BOOK TICKET')
+                      BoxButton(
+                        title: 'BOOK TICKET',
+                        onTap: () {
+                          print(myTripController.wishList[0].name);
+                        },
+                      )
                     ],
                   ),
                 ),
